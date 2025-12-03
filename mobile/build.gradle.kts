@@ -50,13 +50,13 @@ android {
         val userKeystore = File(System.getProperty("user.home"), ".android/debug.keystore")
         val localKeystore = rootProject.file("debug_2.keystore")
         val hasKeyInfo = userKeystore.exists()
-        create("release") {
+        create("release", Action {
             // get from env variables
             storeFile = if (hasKeyInfo) userKeystore else localKeystore
             storePassword = if (hasKeyInfo) "android" else System.getenv("compose_store_password")
             keyAlias = if (hasKeyInfo) "androiddebugkey" else System.getenv("compose_key_alias")
             keyPassword = if (hasKeyInfo) "android" else System.getenv("compose_key_password")
-        }
+        })
     }
 
     buildTypes {
@@ -148,7 +148,6 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.designsystem)
     implementation(projects.core.domain)
-    implementation(projects.glancewidget)
     implementation(projects.core.domainTesting)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
