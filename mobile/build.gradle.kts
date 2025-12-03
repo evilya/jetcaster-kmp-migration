@@ -127,6 +127,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.androidx.compose.navigation)
+    implementation(libs.koin.core)
 
     // Compose
     implementation(libs.androidx.activity.compose)
