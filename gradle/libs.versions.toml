@@ -21,6 +21,7 @@ gradle-versions = "0.52.0"
 koin = "4.1.1"
 jdkDesugar = "2.1.5"
 kotlinx-test = "1.8.20"
+kotlinxDatetime = "0.7.1"
 kotlin = "2.2.21"
 kotlinx_immutable = "0.4.0"
 ksp = "2.2.21-2.0.4"
@@ -75,6 +76,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-androidx-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navigation", version.ref = "koin" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-test-core = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinx-test" }
 kotlinx-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinx-test" }
 kotlinx-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlinx-test" }
