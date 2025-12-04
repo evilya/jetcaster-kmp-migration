@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.androidLibrary
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -106,4 +107,13 @@ compose.resources {
 
 compose.desktop.application {
     mainClass = "com.example.jetcaster.shared.MainKt"
+
+    nativeDistributions {
+        targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        packageName = "com.example.jetcaster"
+        packageVersion = "1.0.0"
+        appResourcesRootDir =
+            layout.projectDirectory.dir("src/jvmMain/assets")
+        jvmArgs += "-splash:${'$'}APPDIR/resources/logo.gif"
+    }
 }
