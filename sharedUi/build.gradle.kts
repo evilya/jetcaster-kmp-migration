@@ -55,10 +55,10 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
 
-            implementation(compose.material3)
-            implementation(libs.compose.material3.adaptive)
-            implementation(libs.compose.material3.adaptive.layout)
-            implementation(libs.compose.material3.adaptive.navigation)
+            implementation(libs.compose.material3)
+            //implementation(libs.compose.material3.adaptive)
+            //implementation(libs.compose.material3.adaptive.layout)
+            //implementation(libs.compose.material3.adaptive.navigation)
 
             implementation(compose.ui)
             // TODO this needs to be added, otherwise BackHandler build fails unresolved
@@ -80,7 +80,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.androidx.activity.compose)
-            // TODO we should probably use ktor, cause other platforms won't work currently
             implementation(libs.coil.network.ktor3)
             implementation(libs.androidx.window)
         }

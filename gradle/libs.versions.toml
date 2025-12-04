@@ -16,6 +16,7 @@ androidx-test = "1.6.1"
 androidx-window = "1.4.0"
 androidxHiltNavigationCompose = "1.2.0"
 compose-multiplatform = "1.10.0-beta02" # 1.10 needed for Material Expressive
+compose-multiplatform-material3 = "1.10.0-alpha05"
 coil = "3.3.0"
 # @keep
 cmp-m3-adaptive = "1.2.0-beta01"
@@ -82,6 +83,7 @@ core-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.r
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform-material3" }
 compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "cmp-m3-adaptive" }
 compose-material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout" , version.ref="cmp-m3-adaptive"}
 compose-material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation" , version.ref="cmp-m3-adaptive"}
