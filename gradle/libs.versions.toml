@@ -18,16 +18,19 @@ androidxHiltNavigationCompose = "1.2.0"
 compose-multiplatform = "1.10.0-beta02" # 1.10 needed for Material Expressive
 coil = "3.3.0"
 # @keep
+cmp-m3-adaptive = "1.2.0-beta01"
 compileSdk = "36"
 coroutines = "1.10.2"
 gradle-versions = "0.52.0"
 koin = "4.1.1"
+ktor = "3.3.1"
 jdkDesugar = "2.1.5"
 kotlinx-test = "1.8.20"
 kotlinxDatetime = "0.7.1"
 kotlin = "2.2.21"
 kotlinx_immutable = "0.4.0"
 ksp = "2.2.21-2.0.4"
+navigationCompose = "2.9.1"
 # @keep
 minSdk = "23"
 okhttp = "4.12.0"
@@ -39,6 +42,7 @@ spotless = "7.0.4"
 # @keep
 targetSdk = "33"
 version-catalog-update = "1.0.0"
+uriKmp = "0.0.20"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -78,6 +82,11 @@ core-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.r
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
+compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "cmp-m3-adaptive" }
+compose-material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout" , version.ref="cmp-m3-adaptive"}
+compose-material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation" , version.ref="cmp-m3-adaptive"}
+compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 html-converter = { module = "be.digitalia.compose.htmlconverter:htmlconverter", version.ref = "htmlconverter" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -95,9 +104,11 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 rssparser = { module = "com.prof18.rssparser:rssparser", version.ref = "rssparser" }
+uri-kmp = { module = "com.eygraber:uri-kmp", version.ref = "uriKmp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
