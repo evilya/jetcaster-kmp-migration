@@ -76,6 +76,7 @@ kotlin {
         }
 
         iosMain.dependencies {
+            implementation(libs.konnectivity)
         }
 
         commonTest.dependencies {
