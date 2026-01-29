@@ -11,7 +11,7 @@ env:
 
 jobs:
   test:
-    name: Run Tests
+    name: Run JVM unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,19 +20,54 @@ jobs:
       - name: Gradle setup
         uses: ./.github/actions/gradle-setup
 
-      - name: Run unit tests
+      - name: Run JVM unit tests
         run: ./gradlew jvmTest
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: test-reports-jvm
           path: "**/build/reports/tests/"
 
-  build-android:
-    name: Build Android
-    runs-on: ubuntu-latest
+  build:
+    name: Build ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: Android
+            os: ubuntu-latest
+            test-task: "testAndroidHostTest"
+            gradle-task: ":mobile:assembleDebug"
+            artifact-name: android-apk
+            artifact-path: mobile/build/outputs/apk/debug/*.apk
+
+          - platform: iOS
+            os: macos-latest
+            test-task: "iosSimulatorArm64Test"
+            artifact-name: iphonesimulator-app
+            artifact-path: build/Build/Products/Debug-iphonesimulator/*
+
+          - platform: Desktop macOS
+            os: macos-latest
+            gradle-task: ":sharedUi:packageDmg"
+            artifact-name: desktop-macos-dmg
+            artifact-path: sharedUi/build/compose/binaries/main/dmg/*.dmg
+
+          - platform: Desktop Windows
+            os: windows-latest
+            gradle-task: ":sharedUi:packageMsi"
+            artifact-name: desktop-windows-msi
+            artifact-path: sharedUi/build/compose/binaries/main/msi/*.msi
+
+          - platform: Desktop Linux
+            os: ubuntu-latest
+            gradle-task: ":sharedUi:packageDeb"
+            artifact-name: desktop-linux-deb
+            artifact-path: sharedUi/build/compose/binaries/main/deb/*.deb
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,28 +75,19 @@ jobs:
       - name: Gradle setup
         uses: ./.github/actions/gradle-setup
 
-      - name: Build Android debug APK
-        run: ./gradlew :mobile:assembleDebug
+      - name: Run ${{ matrix.platform }} tests
+        if: matrix.test-task != ''
+        run: ./gradlew ${{ matrix.test-task }}
 
-      - name: Upload Android debug APK
+      - name: Upload ${{ matrix.platform }} test reports
+        if: matrix.test-task != ''
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: mobile/build/outputs/apk/debug/*.apk
-
-
-  build-ios:
-    name: Build iOS simulator app
-    runs-on: macos-latest
-    needs: test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Gradle setup
-        uses: ./.github/actions/gradle-setup
+          name: test-reports-${{ matrix.platform }}
+          path: "**/build/reports/tests/"
 
       - name: Build iOS simulator app
+        if: matrix.platform == 'iOS'
         run: |
           xcodebuild build \
           -project JetcasterMigration/JetcasterMigration.xcodeproj \
@@ -71,68 +97,12 @@ jobs:
           -derivedDataPath ./build \
           -verbose
 
-      - name: Upload App Folder
+      - name: Build ${{ matrix.platform }}
+        if: matrix.platform != 'iOS'
+        run: ./gradlew ${{ matrix.gradle-task }}
+
+      - name: Upload ${{ matrix.platform }} artifact
         uses: actions/upload-artifact@v4
         with:
-          name: iphonesimulator-app
-          path: build/Build/Products/Debug-iphonesimulator/*
-
-  build-desktop-macos:
-    name: Build Desktop macOS
-    runs-on: macos-latest
-    needs: test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Gradle setup
-        uses: ./.github/actions/gradle-setup
-
-      - name: Build macOS DMG
-        run: ./gradlew :sharedUi:packageDmg
-
-      - name: Upload macOS DMG
-        uses: actions/upload-artifact@v4
-        with:
-          name: desktop-macos-dmg
-          path: sharedUi/build/compose/binaries/main/dmg/*.dmg
-
-  build-desktop-windows:
-    name: Build Desktop Windows
-    runs-on: windows-latest
-    needs: test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5.0.0
-
-      - name: Build Windows MSI
-        run: ./gradlew :sharedUi:packageMsi
-
-      - name: Upload Windows MSI
-        uses: actions/upload-artifact@v4
-        with:
-          name: desktop-windows-msi
-          path: sharedUi/build/compose/binaries/main/msi/*.msi
-
-  build-desktop-linux:
-    name: Build Desktop Linux
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Gradle setup
-        uses: ./.github/actions/gradle-setup
-
-      - name: Build Linux DEB
-        run: ./gradlew :sharedUi:packageDeb
-
-      - name: Upload Linux DEB
-        uses: actions/upload-artifact@v4
-        with:
-          name: desktop-linux-deb
-          path: sharedUi/build/compose/binaries/main/deb/*.deb
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-path }}
